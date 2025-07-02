@@ -2,7 +2,7 @@
 % Please edit documentation in R/export_sharepoint.R
 \name{export_sharepoint_file}
 \alias{export_sharepoint_file}
-\title{Export an R object as a CSV or XLSX file to a specified Sharepoint location}
+\title{Export any file to a specified Sharepoint location}
 \usage{
 export_sharepoint_file(x, site, drive, file)
 }
@@ -16,5 +16,5 @@ export_sharepoint_file(x, site, drive, file)
 \item{file}{Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name}
 }
 \description{
-Export an R object as a CSV or XLSX file to a specified Sharepoint location
+Export any file to a specified Sharepoint location
 }
