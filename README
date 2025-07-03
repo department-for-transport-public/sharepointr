@@ -1,0 +1,7 @@
+# Sharepointr
+
+## Troubleshooting
+
+### I'm having to repeatedly login
+
+Usually this is accompanied by an error message saying that a file is missing; this is due to corruption of your credentials file. You can reset this by running `rm(~/.local/share/AzureR/graph_logins.json)`; you will need to log in one final time, but then your credentials should be remembered.
