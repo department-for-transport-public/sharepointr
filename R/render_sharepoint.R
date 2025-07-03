@@ -7,6 +7,7 @@
 #' @param ... Additional arguments passed to `rmarkdown::render()`.
 #' @export
 #' @importFrom rmarkdown render
+#' @import Microsoft365R
 
 render_to_sharepoint <- function(input_path,
                                  site,
@@ -47,7 +48,9 @@ render_to_sharepoint <- function(input_path,
 
   tryCatch({
 
-    drive_loc$upload_folder(src = tmp_subfolder, dest = dest_path)
+    drive_loc$upload_folder(src = tmp_subfolder,
+                            dest = dest_path,
+                            recursive = TRUE)
 
     message("Sharepoint render complete!")
   }, error = function(e) {
