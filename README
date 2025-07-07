@@ -54,7 +54,33 @@ The first example will list all files and folders in the `yourfolder` subfolder 
 
 ### File imports
 
-These functions allow you to read in data stored in a Sharepoint file. Note that these functions will automatically download the file to a temporary location on your computer, read it in, and then delete the temporary file. This means you don't need to worry about managing temporary files yourself.
+These functions allow you to import data and files stored in sharepoint. There are two different approaches available; if you are reading in data from a file, you can use the `read_sharepoint_file()` function, which will automatically read the file into R using the appropriate function based on the file type (e.g. `read.csv()` for CSV files, `read.xlsx()` for xlsx files). This creates and deletes a temporary file, so you don't need to worry about file management yourself.
+
+If you want to download a file to your local machine, for example a template file, you can use the `import_sharepoint()` function, which will save the file to a specified location on your computer. This won't work for large files (> 500MB), when you will get a message asking you to use alternative storage instead.
+
+* `read_sharepoint_file()`: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to read.
+
+* `import_sharepoint()`: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to download, and the `destfile` parameter to specify where to save the file on your local drive.
+
+### File exports
+
+These functions allow you to export data and files to SharePoint. If you have a data frame that you want to save as a file in SharePoint, you can use the `export_sharepoint()` function, which will automatically write the data frame to a file in SharePoint using the appropriate function based on the file type. This creates and deletes a temporary file, so you don't need to worry about file management yourself.
+
+If you want to upload a file from your local machine to SharePoint, you can use the `export_sharepoint_file()` function, which will save the file to a specified location in SharePoint.
+
+You can also upload an entire folder of files to SharePoint using the `export_sharepoint_folder()` function, which will recursively upload all files in the specified folder to SharePoint.
+
+* `export_sharepoint()`: Exports a data frame to SharePoint as a file. This function automatically detects the file type and uses the appropriate function to write it for common data file types. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint.
+
+* `export_sharepoint_file()`: Uploads a file from your local machine to SharePoint. This is useful for uploading files that you have created or modified on your computer, such as reports or unusual file types. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint, and the `file` parameter to specify the path to the file on your local machine.
+
+* `export_sharepoint_folder()`: Uploads an entire folder of files to SharePoint. This is useful for uploading multiple files at once, such as a folder of reports or data files. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the files in SharePoint, and the `dest_path` parameter to specify the path to the folder on your local machine. If a destination is not specified, the function will copy the files to the root of the specified drive in SharePoint, in the same folder structure as you have locally.
+
+## Rendering Rmarkdown documents directly to Sharepoint
+
+You can also render Rmarkdown documents directly to SharePoint using the `render_sharepoint()` function. This function will render an Rmarkdown document and save the output file directly to SharePoint, without needing to save it locally first.
+
+* `render_sharepoint()`: Renders an Rmarkdown document and saves the output file directly to SharePoint. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint, and the `input` parameter to specify the path to the Rmarkdown file on your local machine. The function will automatically detect the output format (e.g. HTML, PDF, Word) and save the file in the appropriate format. Additional parameters can be passed to the `rmarkdown::render()` function using the `...` argument, allowing you to customize the rendering process as needed.
 
 ## Troubleshooting
 

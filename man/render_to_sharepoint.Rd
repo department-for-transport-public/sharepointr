@@ -13,9 +13,9 @@ render_to_sharepoint(input_path, site, drive, dest_path, ...)
 
 \item{drive}{SharePoint drive name (e.g. "Reports").}
 
-\item{...}{Additional arguments passed to `rmarkdown::render()`.}
+\item{dest_path}{Path inside the SharePoint drive to upload to.}
 
-\item{dest_folder}{Path inside the SharePoint drive to upload to.}
+\item{...}{Additional arguments passed to `rmarkdown::render()`.}
 }
 \description{
 Render an RMarkdown file and upload output to SharePoint

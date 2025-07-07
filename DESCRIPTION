@@ -4,7 +4,7 @@ Title: Easy Connection Between Sharepoint and R
 Version: 0.1.0
 Authors@R: 
   c(person("Francesca", "Bryden", , "francesca.bryden@dft.gov.uk", role = c("aut", "cre")))
-Description: Wrapper over M365R package to allow a simplified connection between Sharepoint and R
+Description: Wrapper over M365R package to allow a simplified connection between Sharepoint and R.
 License: MIT + file LICENSE
 Imports:
     Microsoft365R, rmarkdown, data.table, readxl, writexl

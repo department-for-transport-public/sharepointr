@@ -4,7 +4,7 @@
 \alias{export_sharepoint_file}
 \title{Export any file to a specified Sharepoint location}
 \usage{
-export_sharepoint_file(x, site, drive, file)
+export_sharepoint_file(x, site, drive, dest_path)
 }
 \arguments{
 \item{x}{Name and location of a local file.}
@@ -13,7 +13,7 @@ export_sharepoint_file(x, site, drive, file)
 
 \item{drive}{Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.}
 
-\item{file}{Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name}
+\item{dest_path}{Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name}
 }
 \description{
 Export any file to a specified Sharepoint location

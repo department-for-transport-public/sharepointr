@@ -4,23 +4,23 @@
 #' @param x data object in R
 #' @param site Name of sharepoint site you want to save a file to. Can be found in the URL of the Sharepoint location, e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail", the site name would be Rail
 #' @param drive Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
-#' @param file Name and location of the file you want to save to sharepoint. Includes the extension and any folders after the drive name
+#' @param dest_path Name and location of the file path you want to save to in sharepoint. Includes the extension and any folders before the drive name
 #' @export
 #' @importFrom data.table fwrite
 #' @importFrom writexl write_xlsx
 
-export_sharepoint <- function(x, site, drive, file){
+export_sharepoint <- function(x, site, drive, dest_path){
 
   site_loc <- get_sharepoint_site(site)
   drive_loc <- site_loc$get_drive(drive)
 
   ##Check your filename has a usable extension
-  if(!grepl("[.](xlsx|csv)$", file)){
+  if(!grepl("[.](xlsx|csv)$", dest_path)){
     stop("Please make sure your file name includes the file extension, and is either xlsx or csv")
   }
 
   ##Check your folder exists
-  if(grepl("[/]", file)){
+  if(grepl("[/]", dest_path)){
     ##Folder without file name
     folder <- gsub("(.*[/]).*$", "\\1", file)
     drive_exists <- try(drive_loc$get_item(folder), silent = TRUE)
@@ -42,7 +42,7 @@ export_sharepoint <- function(x, site, drive, file){
     }
   }
   ##Check file extension
-  ext <- tolower(tools::file_ext(file_path))
+  ext <- tolower(tools::file_ext(dest_path))
 
   if(ext == "xlsx"){
 
@@ -64,6 +64,11 @@ export_sharepoint <- function(x, site, drive, file){
   drive_loc$upload_file(src = temp,
                         dest = file)
 
+  message("File '", dest_path, "' uploaded successfully")
+
+  # Clean up temporary file
+  unlink(temp)
+
 }
 
 #' Export any file to a specified Sharepoint location
@@ -71,11 +76,11 @@ export_sharepoint <- function(x, site, drive, file){
 #' @param x Name and location of a local file.
 #' @param site Name of sharepoint site you want to save a file to. Can be found in the URL of the Sharepoint location, e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail", the site name would be Rail
 #' @param drive Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
-#' @param file Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name
+#' @param dest_path Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name
 #' @export
 #' @import Microsoft365R
 
-export_sharepoint_file <- function(x, site, drive, file){
+export_sharepoint_file <- function(x, site, drive, dest_path){
 
   site_loc <- get_sharepoint_site(site)
 
@@ -88,9 +93,9 @@ export_sharepoint_file <- function(x, site, drive, file){
 
   ##Check your folder exists
   ##Skip if no folder
-  if(grepl("[/]", file)){
+  if(grepl("[/]", dest_path)){
     ##Folder without file name
-    folder <- gsub("(.*[/]).*$", "\\1", file)
+    folder <- gsub("(.*[/]).*$", "\\1", dest_path)
     drive_exists <- try(drive_loc$get_item(folder), silent = TRUE)
 
     ##Check if folder exists, offer to make it if not
@@ -112,11 +117,11 @@ export_sharepoint_file <- function(x, site, drive, file){
 
   #Save that file on sharepoint
   tryCatch({
-    drive_loc$upload_file(src = x, dest = file)
-    message("File '", file, "' uploaded successfully")
+    drive_loc$upload_file(src = x, dest = dest_path)
+    message("File '", dest_path, "' uploaded successfully")
     },
       error = function(e) {
-    stop("Failed to upload file '", file, "': ", e$message)
+    stop("Failed to upload file '", dest_path, "': ", e$message)
   })
 
 }

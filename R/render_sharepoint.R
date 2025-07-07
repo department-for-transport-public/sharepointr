@@ -3,7 +3,7 @@
 #' @param input_path Path to the `.Rmd` file.
 #' @param site SharePoint site name (e.g. "Rail").
 #' @param drive SharePoint drive name (e.g. "Reports").
-#' @param dest_folder Path inside the SharePoint drive to upload to.
+#' @param dest_path Path inside the SharePoint drive to upload to.
 #' @param ... Additional arguments passed to `rmarkdown::render()`.
 #' @export
 #' @importFrom rmarkdown render
@@ -21,7 +21,7 @@ render_to_sharepoint <- function(input_path,
 
   # Create temp output folder
   tmp_dir <- tempdir()
-  tmp_subfolder <- file.path(tmp_dir, "render_output")
+  tmp_subfolder <- base::file.path(tmp_dir, "render_output")
 
 
   message("Rendering '", input_path)
