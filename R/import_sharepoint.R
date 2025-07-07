@@ -5,24 +5,72 @@
 #' @param drive Name of the sharepoint drive the file sits on. Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
 #' @param destination Folder and filename location to download the file to. Defaults to NULL, which saves the file with it's current filename in your current working directory.
 #' @export
-#' @importFrom Microsoft365R get_sharepoint_site
+#' @import Microsoft365R
+#' @importFrom readxl read_excel
+#' @importFrom data.table fread
 
-import_sharepoint <- function(file, site, drive, destination = NULL) {
+import_sharepoint <- function(site, drive, file, destination = NULL) {
 
-  site <- Microsoft365R::get_sharepoint_site(
-    site_url =
-      paste0("https://departmentfortransportuk.sharepoint.com/sites/", site),
-    auth_type = "device_code")
-
+  site <- get_sharepoint_site(site)
   drive <- site$get_drive(drive)
 
-  ##If no location, just put file at top location in wd
-  if(is.null(destination)){
-    destination = gsub("^.*[/]", "", file)
+  # Get file metadata to check size
+  item <- drive$get_item(file)
+  file_size_mb <- as.numeric(item$properties$size) / 1e6
+
+  if (file_size_mb > 500) {
+    stop(sprintf("File is %.1f MB, which exceeds the limit of 500MB. Please use a GCP bucket to store larger files", file_size_mb))
   }
 
-  #Import file from Sharepoint
-  drive$download_file(src = file,
-                      dest = destination)
+  # Use filename only if destination not provided
+  if (is.null(destination)) {
+    destination <- basename(file)
   }
 
+  # Download the file
+  drive$download_file(src = file, dest = destination)
+  message(sprintf("File downloaded to '%s' (%.1f MB)", destination, file_size_mb))
+}
+
+
+#' Read a CSV or Excel file directly from SharePoint
+#' @param site SharePoint site name
+#' @param drive Drive name within SharePoint
+#' @param file_path Path to the file on SharePoint (including filename and extension)
+#' @param ... Additional arguments passed to read.csv() or read_excel()
+#' @return A data.frame or tibble
+#' @import Microsoft365R
+#' @importFrom readxl read_excel
+#' @importFrom data.table fread
+#' @export
+read_sharepoint_file <- function(site, drive, file_path, ...) {
+  # Get SharePoint location
+  site_loc <- get_sharepoint_site(site)
+  drive_loc <- site_loc$get_drive(drive)
+
+  # Download file to a temp location
+  tmp_file <- tempfile(fileext = tools::file_ext(file_path))
+  drive_loc$download_file(file_path, dest = tmp_file, overwrite = TRUE)
+
+  # Decide how to read based on file extension
+  ext <- tolower(tools::file_ext(file_path))
+
+  if (ext == "csv") {
+
+    df <- data.table::fread(tmp_file, ...)
+
+  } else if (ext == "xlsx") {
+
+    df <- readxl::read_excel(tmp_file, ...)
+
+  } else {
+
+    stop("Unsupported file type: ", ext)
+
+  }
+
+  # Clean up temp file
+  unlink(tmp_file)
+
+  return(df)
+}

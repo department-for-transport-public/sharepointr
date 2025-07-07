@@ -6,8 +6,8 @@
 #' @param drive Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
 #' @param file Name and location of the file you want to save to sharepoint. Includes the extension and any folders after the drive name
 #' @export
-#' @importFrom openxlsx write.xlsx
 #' @importFrom data.table fwrite
+#' @importFrom writexl write_xlsx
 
 export_sharepoint <- function(x, site, drive, file){
 
@@ -41,14 +41,16 @@ export_sharepoint <- function(x, site, drive, file){
       }
     }
   }
+  ##Check file extension
+  ext <- tolower(tools::file_ext(file_path))
 
-  if(grepl("[.]xlsx$", file)){
+  if(ext == "xlsx"){
 
     #Turn your R object into a file
-    temp <- tempfile(fileext = ".xlsx")
-    openxlsx::write.xlsx(x, temp)
+    temp <- tempfile(fileext = ext)
+    writexl::write_xlsx(x, temp)
 
-  } else if(grepl("[.]csv$", file)){
+  } else if(ext == "csv"){
 
     #Turn your R object into a file
     temp <- tempfile(fileext = ".csv")
