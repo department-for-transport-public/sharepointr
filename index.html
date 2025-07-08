@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sharepointr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
 <li>
 <code>Shared_Documents</code> is the name of the <strong>drive</strong> where your files are stored.</li>
 <li>
-<code>yourfolder/yourfile.txt</code> is the full <strong>path</strong> of the location of your file. This includes any folders below the drive, and the name of the file itself, as well as the file extension (e.g. docx or xlsx).</li>
+<code>yourfolder/yourfile.txt</code> is the full <strong>file path</strong> of the location of your file. This includes any folders below the drive, and the name of the file itself, as well as the file extension (e.g. docx or xlsx).</li>
 </ul>
 <p>For all of the functions in this package, you will be asked to provide the <code>site</code>, <code>drive</code> and <code>path</code> parameters. These correspond to the <code>yoursite</code>, <code>Shared_Documents</code> and <code>yourfolder/yourfile.txt</code> parts of the URL above.</p>
 </div>
@@ -112,8 +112,8 @@
 <p>These functions allow you to import data and files stored in sharepoint. There are two different approaches available; if you are reading in data from a file, you can use the <code><a href="reference/read_sharepoint_file.html">read_sharepoint_file()</a></code> function, which will automatically read the file into R using the appropriate function based on the file type (e.g. <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code> for CSV files, <code>read.xlsx()</code> for xlsx files). This creates and deletes a temporary file, so you don’t need to worry about file management yourself.</p>
 <p>If you want to download a file to your local machine, for example a template file, you can use the <code><a href="reference/import_sharepoint.html">import_sharepoint()</a></code> function, which will save the file to a specified location on your computer. This won’t work for large files (&gt; 500MB), when you will get a message asking you to use alternative storage instead.</p>
 <ul>
-<li><p><code><a href="reference/read_sharepoint_file.html">read_sharepoint_file()</a></code>: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate the file you want to read.</p></li>
-<li><p><code><a href="reference/import_sharepoint.html">import_sharepoint()</a></code>: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate the file you want to download, and the <code>destfile</code> parameter to specify where to save the file on your local drive.</p></li>
+<li><p><code><a href="reference/read_sharepoint_file.html">read_sharepoint_file()</a></code>: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the <code>site</code>, <code>drive</code>, and <code>file_path</code> parameters to locate the file you want to read.</p></li>
+<li><p><code><a href="reference/import_sharepoint.html">import_sharepoint()</a></code>: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate the file you want to download, and the <code>file_path</code> parameter to specify where to save the file on your local drive.</p></li>
 </ul>
 </div>
 <div class="section level3">
@@ -123,9 +123,9 @@
 <p>If you want to upload a file from your local machine to SharePoint, you can use the <code><a href="reference/export_sharepoint_file.html">export_sharepoint_file()</a></code> function, which will save the file to a specified location in SharePoint.</p>
 <p>You can also upload an entire folder of files to SharePoint using the <code><a href="reference/export_sharepoint_folder.html">export_sharepoint_folder()</a></code> function, which will recursively upload all files in the specified folder to SharePoint.</p>
 <ul>
-<li><p><code><a href="reference/export_sharepoint.html">export_sharepoint()</a></code>: Exports a data frame to SharePoint as a file. This function automatically detects the file type and uses the appropriate function to write it for common data file types. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate where you want to save the file in SharePoint.</p></li>
-<li><p><code><a href="reference/export_sharepoint_file.html">export_sharepoint_file()</a></code>: Uploads a file from your local machine to SharePoint. This is useful for uploading files that you have created or modified on your computer, such as reports or unusual file types. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate where you want to save the file in SharePoint, and the <code>file</code> parameter to specify the path to the file on your local machine.</p></li>
-<li><p><code><a href="reference/export_sharepoint_folder.html">export_sharepoint_folder()</a></code>: Uploads an entire folder of files to SharePoint. This is useful for uploading multiple files at once, such as a folder of reports or data files. You can specify the <code>site</code>, <code>drive</code>, and <code>path</code> parameters to locate where you want to save the files in SharePoint, and the <code>dest_path</code> parameter to specify the path to the folder on your local machine. If a destination is not specified, the function will copy the files to the root of the specified drive in SharePoint, in the same folder structure as you have locally.</p></li>
+<li><p><code><a href="reference/export_sharepoint.html">export_sharepoint()</a></code>: Exports a data frame to SharePoint as a file. This function automatically detects the file type and uses the appropriate function to write it for common data file types. You can specify the <code>site</code>, <code>drive</code>, and <code>dest_path</code> parameters to locate where you want to save the file in SharePoint.</p></li>
+<li><p><code><a href="reference/export_sharepoint_file.html">export_sharepoint_file()</a></code>: Uploads a file from your local machine to SharePoint. This is useful for uploading files that you have created or modified on your computer, such as reports or unusual file types. You can specify the <code>site</code>, <code>drive</code>, and <code>dest_path</code> parameters to locate where you want to save the file in SharePoint, and the <code>file</code> parameter to specify the path to the file on your local machine.</p></li>
+<li><p><code><a href="reference/export_sharepoint_folder.html">export_sharepoint_folder()</a></code>: Uploads an entire folder of files to SharePoint. This is useful for uploading multiple files at once, such as a folder of reports or data files. You can specify the <code>site</code>, <code>drive</code>, and <code>dest_path</code> parameters to locate where you want to save the files in SharePoint, and the <code>dest_path</code> parameter to specify the path to the folder on your local machine. If a destination is not specified, the function will copy the files to the root of the specified drive in SharePoint, in the same folder structure as you have locally.</p></li>
 </ul>
 </div>
 </div>
