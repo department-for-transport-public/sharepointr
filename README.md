@@ -31,7 +31,7 @@ In this example:
 * `yourtenant` is the name of your SharePoint tenant. This is set automatically in this package and you don't need to worry about it.
 * `yoursite` is the name of the SharePoint **site** you are accessing. This is the site where your files are stored.
 * `Shared_Documents` is the name of the **drive** where your files are stored.
-* `yourfolder/yourfile.txt` is the full **path** of the location of your file. This includes any folders below the drive, and the name of the file itself, as well as the file extension (e.g. docx or xlsx).
+* `yourfolder/yourfile.txt` is the full **file path** of the location of your file. This includes any folders below the drive, and the name of the file itself, as well as the file extension (e.g. docx or xlsx).
 
 For all of the functions in this package, you will be asked to provide the `site`, `drive` and `path` parameters. These correspond to the `yoursite`, `Shared_Documents` and `yourfolder/yourfile.txt` parts of the URL above.
 
@@ -58,9 +58,9 @@ These functions allow you to import data and files stored in sharepoint. There a
 
 If you want to download a file to your local machine, for example a template file, you can use the `import_sharepoint()` function, which will save the file to a specified location on your computer. This won't work for large files (> 500MB), when you will get a message asking you to use alternative storage instead.
 
-* `read_sharepoint_file()`: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to read.
+* `read_sharepoint_file()`: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the `site`, `drive`, and `file_path` parameters to locate the file you want to read.
 
-* `import_sharepoint()`: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to download, and the `destfile` parameter to specify where to save the file on your local drive.
+* `import_sharepoint()`: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to download, and the `file_path` parameter to specify where to save the file on your local drive.
 
 ### File exports
 
@@ -70,11 +70,11 @@ If you want to upload a file from your local machine to SharePoint, you can use 
 
 You can also upload an entire folder of files to SharePoint using the `export_sharepoint_folder()` function, which will recursively upload all files in the specified folder to SharePoint.
 
-* `export_sharepoint()`: Exports a data frame to SharePoint as a file. This function automatically detects the file type and uses the appropriate function to write it for common data file types. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint.
+* `export_sharepoint()`: Exports a data frame to SharePoint as a file. This function automatically detects the file type and uses the appropriate function to write it for common data file types. You can specify the `site`, `drive`, and `dest_path` parameters to locate where you want to save the file in SharePoint.
 
-* `export_sharepoint_file()`: Uploads a file from your local machine to SharePoint. This is useful for uploading files that you have created or modified on your computer, such as reports or unusual file types. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint, and the `file` parameter to specify the path to the file on your local machine.
+* `export_sharepoint_file()`: Uploads a file from your local machine to SharePoint. This is useful for uploading files that you have created or modified on your computer, such as reports or unusual file types. You can specify the `site`, `drive`, and `dest_path` parameters to locate where you want to save the file in SharePoint, and the `file` parameter to specify the path to the file on your local machine.
 
-* `export_sharepoint_folder()`: Uploads an entire folder of files to SharePoint. This is useful for uploading multiple files at once, such as a folder of reports or data files. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the files in SharePoint, and the `dest_path` parameter to specify the path to the folder on your local machine. If a destination is not specified, the function will copy the files to the root of the specified drive in SharePoint, in the same folder structure as you have locally.
+* `export_sharepoint_folder()`: Uploads an entire folder of files to SharePoint. This is useful for uploading multiple files at once, such as a folder of reports or data files. You can specify the `site`, `drive`, and `dest_path` parameters to locate where you want to save the files in SharePoint, and the `dest_path` parameter to specify the path to the folder on your local machine. If a destination is not specified, the function will copy the files to the root of the specified drive in SharePoint, in the same folder structure as you have locally.
 
 ## Rendering Rmarkdown documents directly to Sharepoint
 
