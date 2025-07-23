@@ -8,6 +8,8 @@
 #' @export
 #' @importFrom data.table fwrite
 #' @importFrom writexl write_xlsx
+#' @importFrom tools file_ext
+#' @import Microsoft365R
 
 export_sharepoint <- function(x, site, drive, dest_path){
 

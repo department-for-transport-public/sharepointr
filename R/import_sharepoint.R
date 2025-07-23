@@ -37,13 +37,16 @@ import_sharepoint <- function(site, drive, file_path, destination = NULL) {
 #' @param site SharePoint site name
 #' @param drive Drive name within SharePoint
 #' @param file_path Path to the file on SharePoint (including filename and extension)
-#' @param ... Additional arguments passed to read.csv() or read_excel()
+#' @param use_openxlsx Logical. If TRUE, uses the openxlsx package to read Excel files. Defaults to FALSE, which uses readxl.
+#' @param ... Additional arguments passed to read.csv() or read_excel() functions
 #' @return A data.frame or tibble
 #' @import Microsoft365R
 #' @importFrom readxl read_excel
+#' @importFrom openxlsx read.xlsx
 #' @importFrom data.table fread
+#' @importFrom tools file_ext
 #' @export
-read_sharepoint_file <- function(site, drive, file_path, ...) {
+read_sharepoint_file <- function(site, drive, file_path, use_openxlsx = FALSE, ...) {
   # Get SharePoint location
   site_loc <- get_sharepoint_site(site)
   drive_loc <- site_loc$get_drive(drive)
@@ -61,7 +64,14 @@ read_sharepoint_file <- function(site, drive, file_path, ...) {
 
   } else if (ext == "xlsx") {
 
+    if(use_openxlsx){
+
+    df <- openxlsx::read.xlsx(tmp_file, ...)
+
+    } else {
+
     df <- readxl::read_excel(tmp_file, ...)
+  }
 
   } else {
 

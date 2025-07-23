@@ -58,7 +58,7 @@ These functions allow you to import data and files stored in sharepoint. There a
 
 If you want to download a file to your local machine, for example a template file, you can use the `import_sharepoint()` function, which will save the file to a specified location on your computer. This won't work for large files (> 500MB), when you will get a message asking you to use alternative storage instead.
 
-* `read_sharepoint_file()`: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the `site`, `drive`, and `file_path` parameters to locate the file you want to read.
+* `read_sharepoint_file()`: Reads a file from SharePoint and returns the data in R. This function automatically detects the file type and uses the appropriate function to read it for common data file types. You can specify the `site`, `drive`, and `file_path` parameters to locate the file you want to read. For some xlsx files, openxlsx gives different results to readxl; you may specify `use_openxlsx = TRUE` if you would like to use openxlsx specifically.
 
 * `import_sharepoint()`: Downloads a file from SharePoint to your local machine. This is useful for downloading files that you want to keep on your computer, such as templates or reports. You can specify the `site`, `drive`, and `path` parameters to locate the file you want to download, and the `file_path` parameter to specify where to save the file on your local drive.
 
