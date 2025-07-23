@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sharepointr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -44,7 +44,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_sharepoint_file</span><span class="op">(</span><span class="va">site</span>, <span class="va">drive</span>, <span class="va">file_path</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_sharepoint_file</span><span class="op">(</span><span class="va">site</span>, <span class="va">drive</span>, <span class="va">file_path</span>, use_openxlsx <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -63,8 +63,12 @@
 <dd><p>Path to the file on SharePoint (including filename and extension)</p></dd>
 
 
+<dt id="arg-use-openxlsx">use_openxlsx<a class="anchor" aria-label="anchor" href="#arg-use-openxlsx"></a></dt>
+<dd><p>Logical. If TRUE, uses the openxlsx package to read Excel files. Defaults to FALSE, which uses readxl.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to read.csv() or read_excel()</p></dd>
+<dd><p>Additional arguments passed to read.csv() or read_excel() functions</p></dd>
 
 </dl></div>
     <div id="value">
