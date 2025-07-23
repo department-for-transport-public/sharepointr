@@ -64,7 +64,7 @@ export_sharepoint <- function(x, site, drive, dest_path){
 
   #Save that file on sharepoint
   drive_loc$upload_file(src = temp,
-                        dest = file)
+                        dest = dest_path)
 
   message("File '", dest_path, "' uploaded successfully")
 
