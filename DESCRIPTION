@@ -1,7 +1,7 @@
 Package: sharepointr
 Type: Package
 Title: Easy Connection Between Sharepoint and R
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
   c(person("Francesca", "Bryden", , "francesca.bryden@dft.gov.uk", role = c("aut", "cre")))
 Description: Wrapper over M365R package to allow a simplified connection between Sharepoint and R.
