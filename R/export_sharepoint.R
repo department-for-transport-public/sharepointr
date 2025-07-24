@@ -24,7 +24,7 @@ export_sharepoint <- function(x, site, drive, dest_path){
   ##Check your folder exists
   if(grepl("[/]", dest_path)){
     ##Folder without file name
-    folder <- gsub("(.*[/]).*$", "\\1", file)
+    folder <- gsub("(.*[/]).*$", "\\1", dest_path)
     drive_exists <- try(drive_loc$get_item(folder), silent = TRUE)
 
     ##Check if folder exists, offer to make it if not
