@@ -78,9 +78,9 @@ You can also upload an entire folder of files to SharePoint using the `export_sh
 
 ## Rendering Rmarkdown documents directly to Sharepoint
 
-You can also render Rmarkdown documents directly to SharePoint using the `render_sharepoint()` function. This function will render an Rmarkdown document and save the output file directly to SharePoint, without needing to save it locally first.
+You can also render Rmarkdown documents directly to SharePoint using the `render_to_sharepoint()` function. This function will render an Rmarkdown document and save the output file directly to SharePoint, without needing to save it locally first.
 
-* `render_sharepoint()`: Renders an Rmarkdown document and saves the output file directly to SharePoint. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint, and the `input` parameter to specify the path to the Rmarkdown file on your local machine. The function will automatically detect the output format (e.g. HTML, PDF, Word) and save the file in the appropriate format. Additional parameters can be passed to the `rmarkdown::render()` function using the `...` argument, allowing you to customize the rendering process as needed.
+* `render_to_sharepoint()`: Renders an Rmarkdown document and saves the output file directly to SharePoint. You can specify the `site`, `drive`, and `path` parameters to locate where you want to save the file in SharePoint, and the `input` parameter to specify the path to the Rmarkdown file on your local machine. The function will automatically detect the output format (e.g. HTML, PDF, Word) and save the file in the appropriate format. Additional parameters can be passed to the `rmarkdown::render()` function using the `...` argument, allowing you to customize the rendering process as needed.
 
 ## Troubleshooting
 
