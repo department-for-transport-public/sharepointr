@@ -50,14 +50,13 @@ read_sharepoint_file <- function(site, drive, file_path, use_openxlsx = FALSE, .
   # Get SharePoint location
   site_loc <- get_sharepoint_site(site)
   drive_loc <- site_loc$get_drive(drive)
-
+  ##Get file extension
+  ext <- tolower(tools::file_ext(file_path))
   # Download file to a temp location
-  tmp_file <- tempfile(fileext = tools::file_ext(file_path))
+  tmp_file <- tempfile(fileext = paste0(".", ext))
   drive_loc$download_file(file_path, dest = tmp_file, overwrite = TRUE)
 
   # Decide how to read based on file extension
-  ext <- tolower(tools::file_ext(file_path))
-
   if (ext == "csv") {
 
     df <- data.table::fread(tmp_file, ...)
