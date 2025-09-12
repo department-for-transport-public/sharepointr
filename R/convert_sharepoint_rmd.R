@@ -49,14 +49,14 @@ convert_sharepoint_rmd <- function(file_path,
   md_file <- readLines(tmp_file)
 
   #Nicely format the image references
-  md_file <- generate_image_references(md_file)
+  md_file <- govspeakr::generate_image_references(md_file)
 
   ##Turn md file into plain text
   govspeak_file <- paste(md_file, collapse = "\n")
 
-  govspeak_file <- remove_header(govspeak_file)
+  govspeak_file <- govspeakr::remove_header(govspeak_file)
 
-  govspeak_file <- convert_callouts(govspeak_file)
+  govspeak_file <- govspeakr::convert_callouts(govspeak_file)
 
   #Remove long strings of hashes/page break indicators
   #and move all headers down one level
@@ -73,11 +73,11 @@ convert_sharepoint_rmd <- function(file_path,
   }
 
   ##Substitute hashes according to pattern
-  govspeak_file <- hash_sub(govspeak_file, sub_type = sub_pattern)
+  govspeak_file <- govspeakr::hash_sub(govspeak_file, sub_type = sub_pattern)
 
   ##Remove YAML block if requested
   if (remove_blocks) {
-    govspeak_file <- remove_rmd_blocks(govspeak_file)
+    govspeak_file <- govspeakr::remove_rmd_blocks(govspeak_file)
   }
 
   # Create temporary file for converted output
