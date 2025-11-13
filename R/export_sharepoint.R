@@ -5,14 +5,14 @@
 #' @param site Name of sharepoint site you want to save a file to. Can be found in the URL of the Sharepoint location, e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail", the site name would be Rail
 #' @param drive Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
 #' @param dest_path Name and location of the file path you want to save to in sharepoint. Includes the extension and any folders before the drive name
-#' @param new_folder allows you to deliberately create a new folder destination, defaults to "no"
+#' @param new_folder allows you to deliberately create a new folder destination, defaults to FALSE
 #' @export
 #' @importFrom data.table fwrite
 #' @importFrom writexl write_xlsx
 #' @importFrom tools file_ext
 #' @import Microsoft365R
 
-export_sharepoint <- function(x, site, drive, dest_path, new_folder = "no"){
+export_sharepoint <- function(x, site, drive, dest_path, new_folder = FALSE){
 
   site_loc <- get_sharepoint_site(site)
   drive_loc <- site_loc$get_drive(drive)
@@ -23,8 +23,6 @@ export_sharepoint <- function(x, site, drive, dest_path, new_folder = "no"){
   }
 
   ##Check your folder exists
-
-  if(new_folder == "no"){
   if(grepl("[/]", dest_path)){
     ##Folder without file name
     folder <- gsub("(.*[/]).*$", "\\1", dest_path)
@@ -32,6 +30,8 @@ export_sharepoint <- function(x, site, drive, dest_path, new_folder = "no"){
 
     ##Check if folder exists, offer to make it if not
     if("try-error" %in% class(drive_exists) ) {
+
+      if(new_folder !=TRUE) {
       message("Folder location ", folder, " not found")
       response <- tolower(readline(prompt = "Do you want to create a new folder? (yes/no): "))
 
@@ -44,7 +44,12 @@ export_sharepoint <- function(x, site, drive, dest_path, new_folder = "no"){
       } else {
         stop(folder, " not found and not created")
       }
+      } else {
+        # Create the folder — assuming drive is defined
+        drive_loc$create_folder(folder)
+        message("Folder created successfully.")
     }
+
   }
   }  else {
     message("Creating folder: ", folder)
@@ -90,11 +95,12 @@ export_sharepoint <- function(x, site, drive, dest_path, new_folder = "no"){
 #' @param site Name of sharepoint site you want to save a file to. Can be found in the URL of the Sharepoint location, e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail", the site name would be Rail
 #' @param drive Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.
 #' @param dest_path Name and location on sharepoint you want the file to be saved to. Includes the extension and any folders after the drive name
-#' @param new_folder allows you to deliberately create a new folder destination, defaults to "no"
+#' @param new_folder allows you to deliberately create a new folder destination, defaults to FALSE
 #' @export
 #' @import Microsoft365R
 
-export_sharepoint_file <- function(x, site, drive, dest_path, new_folder = "no"){
+
+export_sharepoint_file_test <- function(x, site, drive, dest_path, new_folder = FALSE){
 
   site_loc <- get_sharepoint_site(site)
 
@@ -108,7 +114,6 @@ export_sharepoint_file <- function(x, site, drive, dest_path, new_folder = "no")
   ##Check your folder exists
   ##Skip if no folder
 
-  if(new_folder == "no"){
   if(grepl("[/]", dest_path)){
     ##Folder without file name
     folder <- gsub("(.*[/]).*$", "\\1", dest_path)
@@ -116,37 +121,40 @@ export_sharepoint_file <- function(x, site, drive, dest_path, new_folder = "no")
 
     ##Check if folder exists, offer to make it if not
     if("try-error" %in% class(drive_exists) ) {
-      message("Folder location ", folder, " not found")
-      response <- tolower(readline(prompt = "Do you want to create a new folder? (yes/no): "))
 
-      if (response %in% c("yes", "y")) {
+      if(new_folder !=TRUE) {
+        message("Folder location ", folder, " not found")
+        response <- tolower(readline(prompt = "Do you want to create a new folder? (yes/no): "))
+
+        if (response %in% c("yes", "y")) {
+          message("Creating folder: ", folder)
+
+          # Create the folder — assuming drive is defined
+          drive_loc$create_folder(folder)
+          message("Folder created successfully.")
+        } else {
+          stop(folder, " not found and not created")
+        }
+      } else {
         message("Creating folder: ", folder)
 
         # Create the folder — assuming drive is defined
         drive_loc$create_folder(folder)
         message("Folder created successfully.")
-      } else {
-      stop(folder, " not found and not created")
       }
+
     }
-  }
-  } else {
-    message("Creating folder: ", folder)
 
-    # Create the folder — assuming drive is defined
-    drive_loc$create_folder(folder)
-    message("Folder created successfully.")
-  }
-
-  #Save that file on sharepoint
-  tryCatch({
-    drive_loc$upload_file(src = x, dest = dest_path)
-    message("File '", dest_path, "' uploaded successfully")
+    #Save that file on sharepoint
+    tryCatch({
+      drive_loc$upload_file(src = x, dest = dest_path)
+      message("File '", dest_path, "' uploaded successfully")
     },
-      error = function(e) {
-    stop("Failed to upload file '", dest_path, "': ", e$message)
-  })
+    error = function(e) {
+      stop("Failed to upload file '", dest_path, "': ", e$message)
+    })
 
+  }
 }
 
 
