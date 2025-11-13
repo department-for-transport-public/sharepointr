@@ -4,7 +4,7 @@
 \alias{export_sharepoint}
 \title{Export an R object as a CSV or XLSX file to a specified Sharepoint location}
 \usage{
-export_sharepoint(x, site, drive, dest_path)
+export_sharepoint(x, site, drive, dest_path, new_folder = FALSE)
 }
 \arguments{
 \item{x}{data object in R}
@@ -14,6 +14,8 @@ export_sharepoint(x, site, drive, dest_path)
 \item{drive}{Name of the sharepoint drive you want to save the file to Can be found in the URL of the sharepoint location e.g. for "departmentfortransportuk.sharepoint.com/sites/Rail/RailStats", the drive name is "RailStats". Can also be found using the list_sharepoint_drives() function in this package.}
 
 \item{dest_path}{Name and location of the file path you want to save to in sharepoint. Includes the extension and any folders before the drive name}
+
+\item{new_folder}{allows you to deliberately create a new folder destination, defaults to FALSE}
 }
 \description{
 Export an R object as a CSV or XLSX file to a specified Sharepoint location

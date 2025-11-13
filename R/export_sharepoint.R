@@ -100,7 +100,7 @@ export_sharepoint <- function(x, site, drive, dest_path, new_folder = FALSE){
 #' @import Microsoft365R
 
 
-export_sharepoint_file_test <- function(x, site, drive, dest_path, new_folder = FALSE){
+export_sharepoint_file <- function(x, site, drive, dest_path, new_folder = FALSE){
 
   site_loc <- get_sharepoint_site(site)
 
@@ -132,6 +132,7 @@ export_sharepoint_file_test <- function(x, site, drive, dest_path, new_folder = 
           # Create the folder — assuming drive is defined
           drive_loc$create_folder(folder)
           message("Folder created successfully.")
+
         } else {
           stop(folder, " not found and not created")
         }
